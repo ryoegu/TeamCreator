@@ -1,0 +1,21 @@
+.THIS .draggable {
+  cursor:-moz-grab;
+  cursor:-webkit-grab;
+  cursor: grab !important;
+}
+
+.THIS .sticky{
+    postion: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+.THIS .drop-guide {
+    text-align: center;
+    color: green;
+    background-color: #fafafa;
+}
+
+.THIS .drop-guide:hover{
+    background-color: #fafafa !important;
+}

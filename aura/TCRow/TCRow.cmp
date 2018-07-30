@@ -1,0 +1,10 @@
+<aura:component controller="MembersController" access="global">
+    <aura:attribute name="member" type="Object" />
+    <aura:attribute name="fieldName" type="Object" />
+    <aura:attribute name="output" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="slds-truncate" title="{!v.output}">
+        {!v.output}
+    </div>
+</aura:component>

@@ -1,0 +1,6 @@
+<design:component label="Team Creator">
+	<design:attribute name="listAsc" label="List Asc or Desc" description="Picklist asc or desc(Default is asc)" datasource="asc,desc" default="asc" required="true" />
+	<design:attribute name="fields1" label="Field 1" description="Choose fields in draggable view." datasource="apex://CMFieldsList"/>
+    <design:attribute name="fields2" label="Field 2" description="Choose fields in draggable view." datasource="apex://CMFieldsList" />
+    <design:attribute name="fields3" label="Field 3" description="Choose fields in draggable view." datasource="apex://CMFieldsList" />
+</design:component>

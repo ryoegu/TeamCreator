@@ -1,0 +1,98 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="MembersController">
+    <aura:attribute name="draggedId" type="String" access="private" />
+    <aura:attribute name="members" type="object[]" default="[]" />
+    <aura:attribute name="teams" type="List" />
+    <aura:attribute name="columns" type="List"/>
+    
+    <aura:attribute name="listAsc" type="String" default="asc" />
+    <aura:attribute name="fields1" type="String" default="name" />
+    <aura:attribute name="fields2" type="String" default="title" />
+    <aura:attribute name="fields3" type="String" default="companyoraccount" />
+    
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+    <div class="slds-grid slds-wrap slds-gutters">
+        <div class="slds-col slds-size_1-of-2">
+            <!-- Team A -->
+			<aura:iteration items="{!v.teams}" var="team">
+                <aura:if isTrue="{!team.disabled == false}">
+                <lightning:card title="{!team.label}" iconName="standard:team_member" class="slds-card_boundary">
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer sortable-table" >
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <aura:iteration items="{!v.columns}" var="col">
+                        <th scope="col">
+                            <div class="slds-truncate" title="{!col.fieldName}">{!col.label}</div>
+                        </th>
+                        </aura:iteration>
+                    </tr>
+                </thead>
+                <tbody class="list-group" ondrop="{!c.handleDrop}" ondragover="{!c.allowDrop}">
+                    <aura:iteration items="{!v.members}" var="member">
+                        <aura:if isTrue="{!member.key == team.value}">
+		                    <aura:iteration items="{!member.list}" var="m">
+                      		  <tr data-team="{!team.value}" id="{!m.id}" class="list-group-item draggable" draggable="true" ondragstart="{!c.handleDrag}" ondrop="{!c.handleEnd}">
+                       			 <aura:iteration items="{!v.columns}" var="col">
+                     				  	<td scope="row" data-label="{!col.fieldName}">
+                           			     <c:TCRow member="{!m}" fieldName="{!col}" />
+                       					</td>
+                        	 	</aura:iteration>
+                    		  </tr>
+                    		</aura:iteration>
+                     </aura:if>
+                        </aura:iteration>
+					<tr data-team="{!team.value}" ondrop="{!c.handleEnd}">
+                        <td class="drop-guide" height="40" colspan="3">Drop here to choose this team.</td>
+                    </tr>
+                </tbody>
+            </table>
+            </lightning:card>
+                </aura:if>
+            </aura:iteration>
+        </div>
+
+
+
+        <div class="slds-col slds-size_1-of-2 sticky">
+		<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <aura:iteration items="{!v.columns}" var="col">
+                        <th scope="col">
+                            <div class="slds-truncate" title="{!col.fieldName}">{!col.label}</div>
+                        </th>
+                        </aura:iteration>
+                    </tr>
+                </thead>
+            
+            <tbody class="list-group" ondrop="{!c.handleDrop}" ondragover="{!c.allowDrop}">
+            <!-- NO TEAM -->
+            <aura:iteration items="{!v.members}" var="member">
+                <aura:if isTrue="{!member.key == null}">
+            
+                    
+                
+                    <aura:iteration items="{!member.list}" var="m">
+                    <tr id="{!m.id}" class="list-group-item draggable" draggable="true" ondragstart="{!c.handleDrag}" ondrop="{!c.handleEnd}">
+                        
+                        <aura:iteration items="{!v.columns}" var="col">
+                        <td scope="row" data-label="{!col.fieldName}">
+                                <c:TCRow member="{!m}" fieldName="{!col}" />
+                            
+                        </td>
+                        </aura:iteration>
+                    </tr>
+                    </aura:iteration>
+					
+
+
+
+                </aura:if>
+            </aura:iteration>
+               <tr ondrop="{!c.handleEnd}">
+                        <td class="drop-guide" height="40" colspan="3">Drop here to remove any teams.</td>
+                    </tr>
+             </tbody>
+                        </table>
+        </div>
+    </div>
+</aura:component>
